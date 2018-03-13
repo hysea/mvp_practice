@@ -49,6 +49,7 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 //    compile rootProject.ext.dependencies["BaseAdapterHelper"]
     compile rootProject.ext.dependencies["glide"]
+    compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["banner"]
     compile rootProject.ext.dependencies["viewanimator"]
     compile rootProject.ext.dependencies["FlycoDialog"]
