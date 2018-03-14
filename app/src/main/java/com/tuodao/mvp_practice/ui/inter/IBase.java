@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tuodao.mvp_practice.component.AppComponent;
+
 /**
  * Created by hysea on 2018/3/13.
  */
@@ -16,9 +18,9 @@ public interface IBase {
 
     int getContentLayout();
 
-    void initInjector();
+    void initInjector(AppComponent appComponent);
 
-    void bindView();
+    void bindView(View view, Bundle savedInstanceState);
 
     void initData();
 }

@@ -47,7 +47,7 @@ dependencies {
     compile rootProject.ext.dependencies["fragmentation"]
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-//    compile rootProject.ext.dependencies["BaseAdapterHelper"]
+    compile rootProject.ext.dependencies["BaseAdapterHelper"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["banner"]
@@ -61,6 +61,7 @@ dependencies {
     compile rootProject.ext.dependencies["tablayout"]
     compile rootProject.ext.dependencies["androideventbus"]
     compile rootProject.ext.dependencies["gif-drawable"]
+//    compile rootProject.ext.dependencies["multi_state_view"]
 
     compile rootProject.ext.dependencies["litepal"]
 }

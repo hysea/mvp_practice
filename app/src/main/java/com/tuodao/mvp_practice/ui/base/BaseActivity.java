@@ -1,19 +1,45 @@
 package com.tuodao.mvp_practice.ui.base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.jaeger.library.StatusBarUtil;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.tuodao.mvp_practice.App;
 import com.tuodao.mvp_practice.R;
+import com.tuodao.mvp_practice.ui.inter.IBase;
+import com.tuodao.mvp_practice.widget.MultiStateView;
+import com.tuodao.mvp_practice.widget.SimpleMultiStateView;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
  * Created by hysea on 2018/3/13.
  */
 
-public class BaseActivity<T extends BaseContract.BasePresenter> extends SupportActivity implements BGASwipeBackHelper.Delegate{
+@SuppressLint("Registered")
+public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends SupportActivity implements BGASwipeBackHelper.Delegate, IBase, BaseContract.BaseView {
+
+    @Nullable
+    @BindView(R.id.multi_state_view)
+    SimpleMultiStateView mMultiStateView;
+
+    @Nullable
+    @Inject
+    protected T mPresenter;
+    protected View mRootView;
+    private Unbinder mUnbinder;
     protected BGASwipeBackHelper mSwipeBackHelper;
 
     @Override
@@ -22,7 +48,84 @@ public class BaseActivity<T extends BaseContract.BasePresenter> extends SupportA
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
+        mRootView = createView(null, null, savedInstanceState);
+        setContentView(mRootView);
+        initInjector(App.getInstance().getAppComponent());
+        attachView();
+        bindView(mRootView, savedInstanceState);
+        initMultiStateView();
+        initData();
+    }
 
+
+    @Override
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = getLayoutInflater().inflate(getContentLayout(), container);
+        mUnbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public View getView() {
+        return mRootView;
+    }
+
+    private void attachView() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    protected void initMultiStateView() {
+        if (mMultiStateView == null) return;
+        mMultiStateView.setEmptyResource(R.layout.layout_view_empty)
+                .setRetryResource(R.layout.layout_view_retry)
+                .setLoadingResource(R.layout.layout_view_loading)
+                .setNoNetworkResource(R.layout.layout_view_no_network)
+                .build()
+                .setOnReloadListener(new MultiStateView.OnReloadListener() {
+                    @Override
+                    public void onReload() {
+                        onRetry();
+                    }
+                });
+    }
+
+    public SimpleMultiStateView getMultiStateView() {
+        return mMultiStateView;
+    }
+
+    @Override
+    public void showSuccess() {
+        if (mMultiStateView != null) {
+            mMultiStateView.showContent();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (mMultiStateView != null) {
+            mMultiStateView.showLoadingView();
+        }
+    }
+
+    @Override
+    public void showFailed() {
+        if (mMultiStateView != null) {
+            mMultiStateView.showErrorView();
+        }
+    }
+
+    @Override
+    public void showNotNetwork() {
+        if (mMultiStateView != null) {
+            mMultiStateView.showNoNetworkView();
+        }
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.bindToLife();
     }
 
     private void initSwipeBackFinish() {
@@ -109,5 +212,14 @@ public class BaseActivity<T extends BaseContract.BasePresenter> extends SupportA
      */
     public void setStatusBarColor(@ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
         StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mUnbinder.unbind();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+        super.onDestroy();
     }
 }

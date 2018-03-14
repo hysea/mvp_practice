@@ -1,13 +1,14 @@
 package com.tuodao.mvp_practice.ui.base;
 
-/**
- * Created by hysea on 2018/3/13.
- */
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 public interface BaseContract {
     interface BaseView {
+        // 显示加载进度
+        void showLoading();
+
         // 显示请求成功
-        void showSuceess();
+        void showSuccess();
 
         // 显示请求失败
         void showFailed();
@@ -17,10 +18,14 @@ public interface BaseContract {
 
         // 重试
         void onRetry();
+
+        // 绑定生命周期
+        <T> LifecycleTransformer<T> bindToLife();
     }
 
     interface BasePresenter<T extends BaseView> {
         void attachView(T view);
+
         void detachView();
     }
 }
