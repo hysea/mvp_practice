@@ -7,10 +7,12 @@ import android.widget.FrameLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.tuodao.mvp_practice.component.AppComponent;
 import com.tuodao.mvp_practice.ui.base.BaseActivity;
+import com.tuodao.mvp_practice.ui.base.SupportFragment;
+import com.tuodao.mvp_practice.ui.news.NewsFragment;
 import com.tuodao.mvp_practice.widget.BottomBar;
+import com.tuodao.mvp_practice.widget.BottomBarTab;
 
 import butterknife.BindView;
-import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_bar)
@@ -29,8 +31,44 @@ public class MainActivity extends BaseActivity {
     public void bindView(View view, Bundle savedInstanceState) {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         if (savedInstanceState == null) {
+            mFragments[0] = NewsFragment.newInstance();
+            mFragments[1] = NewsFragment.newInstance();
+            mFragments[2] = NewsFragment.newInstance();
+            mFragments[3] = NewsFragment.newInstance();
 
+            getSupportDelegate().loadMultipleRootFragment(R.id.fl_container, 0,
+                    mFragments[0],
+                    mFragments[1],
+                    mFragments[2],
+                    mFragments[3]);
+        } else {
+            mFragments[0] = findFragment(NewsFragment.class);
+            mFragments[1] = findFragment(NewsFragment.class);
+            mFragments[2] = findFragment(NewsFragment.class);
+            mFragments[3] = findFragment(NewsFragment.class);
         }
+
+        mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_news, "新闻"))
+                .addItem(new BottomBarTab(this, R.drawable.ic_video, "视频"))
+                .addItem(new BottomBarTab(this, R.drawable.ic_jiandan, "煎蛋"))
+                .addItem(new BottomBarTab(this, R.drawable.ic_my, "我的"));
+
+        mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, int prePosition) {
+                getSupportDelegate().showHideFragment(mFragments[position], mFragments[prePosition]);
+            }
+
+            @Override
+            public void onTabUnSelected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
+            }
+        });
     }
 
     @Override

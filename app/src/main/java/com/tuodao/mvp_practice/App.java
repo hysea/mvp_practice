@@ -3,6 +3,7 @@ package com.tuodao.mvp_practice;
 import com.tuodao.mvp_practice.component.AppComponent;
 import com.tuodao.mvp_practice.component.DaggerAppComponent;
 import com.tuodao.mvp_practice.module.AppModule;
+import com.tuodao.mvp_practice.module.HttpModule;
 
 import org.litepal.LitePalApplication;
 
@@ -24,6 +25,7 @@ public class App extends LitePalApplication {
         BGASwipeBackHelper.init(this, null);
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .httpModule(new HttpModule())
                 .build();
     }
 

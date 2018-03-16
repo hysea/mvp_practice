@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by hysea on 2018/3/14.
@@ -96,6 +97,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mPresenter.getChannel();
     }
 
+
+
     @Override
     public void loadData(List<Channel> channels, List<Channel> otherChannels) {
         if (otherChannels != null) {
@@ -114,6 +117,11 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             mVpNews.setCurrentItem(0, false);
             mSlideTab.setViewPager(mVpNews);
         }
+    }
+    @OnClick(R.id.ibtn_edit)
+    public void onClick(View view) {
+        ChannelDialogFragment dialogFragment = ChannelDialogFragment.newInstance(mSelectedDatas, mUnSelectedDatas);
+        dialogFragment.show(getChildFragmentManager(), "CHANNEL");
     }
 
     @Subscriber

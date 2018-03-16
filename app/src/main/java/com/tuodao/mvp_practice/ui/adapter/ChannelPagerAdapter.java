@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.tuodao.mvp_practice.bean.Channel;
-import com.tuodao.mvp_practice.ui.news.DetailFragment;
+import com.tuodao.mvp_practice.ui.news.NewsDetailFragment;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class ChannelPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return DetailFragment.newInstance();
+        return NewsDetailFragment.newInstance(mChannels.get(position).getChannelId(), position);
     }
 
     @Override

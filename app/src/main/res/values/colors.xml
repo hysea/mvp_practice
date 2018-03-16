@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="windowBackground">@android:color/white</color>
 
+    <color name="news_tv_source_color">#a3a3a3</color>
+
     <color name="tab_un_select">#a3a3a3</color>
 </resources>

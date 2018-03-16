@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.tuodao.mvp_practice.App;
 import com.tuodao.mvp_practice.R;
-import com.tuodao.mvp_practice.component.AppComponent;
 import com.tuodao.mvp_practice.ui.inter.IBase;
 import com.tuodao.mvp_practice.widget.MultiStateView;
 import com.tuodao.mvp_practice.widget.SimpleMultiStateView;
@@ -141,7 +140,7 @@ public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends
 
     @Override
     public <T> LifecycleTransformer<T> bindToLife() {
-        return this.bindToLife();
+        return this.bindToLifecycle();
     }
 
     @Override

@@ -88,7 +88,7 @@ public class NewsApi {
      * @param typeid
      * @return
      */
-    public Observable<List<VideoDetailBean>> getVideoDetail(int page, String listtype, String typeid){
+    public Observable<List<VideoDetailBean>> getVideoDetail(int page,String listtype,String typeid){
         return mService.getVideoDetail(page,listtype,typeid);
     }
 }

@@ -102,15 +102,12 @@ public class NewsDetail implements Serializable {
     public static class ItemBean implements Serializable, MultiItemEntity {
         //广告类型
         public static final int TYPE_ADVERT_TITLEIMG = 1;
-
         public static final int TYPE_ADVERT_SLIDEIMG = 2;
-
         public static final int TYPE_ADVERT_LONGIMG = 3;
         //图片类型
         public static final int TYPE_SLIDE = 4;
         //视频类型
         public static final int TYPE_PHVIDEO = 5;
-
         //显示形式单图
         public static final int TYPE_DOC_TITLEIMG = 6;
         //显示形式多图

@@ -1,7 +1,6 @@
 package com.tuodao.mvp_practice.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.google.gson.annotations.SerializedName;
 
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;

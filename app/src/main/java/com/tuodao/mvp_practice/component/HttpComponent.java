@@ -1,5 +1,6 @@
 package com.tuodao.mvp_practice.component;
 
+import com.tuodao.mvp_practice.ui.news.NewsDetailFragment;
 import com.tuodao.mvp_practice.ui.news.NewsFragment;
 
 import dagger.Component;
@@ -10,4 +11,5 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class)
 public interface HttpComponent {
     void inject(NewsFragment newsFragment);
+    void inject(NewsDetailFragment newsDetailFragment);
 }
